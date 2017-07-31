@@ -1,5 +1,6 @@
 /**
  * Created by chkui on 2017/7/28.
+ * 用于演示构架简单的后台渲染
  */
 
 import React from 'react'
