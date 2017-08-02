@@ -4,8 +4,7 @@
  */
 
 import React from 'react'
-import {render} from 'react-dom'
-import {Link, HashRouter}from 'react-router-dom'
+import {Link}from 'react-router-dom'
 
 const App = props =>
     <div>
@@ -16,3 +15,5 @@ const App = props =>
             123
         </section>
     </div>
+
+export default App
