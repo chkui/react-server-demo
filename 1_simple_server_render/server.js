@@ -4,20 +4,33 @@ require('babel-register')({
     presets: ['es2015', 'react', 'stage-0'],
     plugins: ['add-module-exports']
 });
+    //启动一个koa实例
 const koa = require('./koa'),
+    // koa的垫片，将旧的generator模式替换为promise模式
     convert = require('koa-convert'),
+    //webpack工具
     webpack = require('webpack'),
+    //文件读写工具
     fs = require('fs'),
+    //路径处理工具
     path = require('path'),
-    devMiddleware = require('koa-webpack-dev-middleware'), //koa开发中间件
-    hotMiddleware = require('koa-webpack-hot-middleware'), //热部署中间件
-    views = require('koa-views'), //页面模板工具
-    config = require('./webpack/server-dev'), //webpack的静态配置
+    //koa开发中间件
+    devMiddleware = require('koa-webpack-dev-middleware'),
+    //koa热部署中间件
+    hotMiddleware = require('koa-webpack-hot-middleware'),
+    //页面模板工具
+    views = require('koa-views'),
+    //webpack配置
+    config = require('./webpack/server-dev'),
+    //自己实现用于渲染app.js的中间件
     middleware = require('./middleware'),
+    //端口
     port = 8080,
-    compiler = webpack(config) //webpack打包执行
+    //获取打包处理器的实例
+    compiler = webpack(config)
 
-
+//将HTML文件生成到磁盘上，否则ejs模板无法使用。
+//koa-webpack-dev-middleware导致webpack打包不会生成到磁盘
 compiler.plugin('emit', (compilation, callback) => {
     const assets = compilation.assets
     let file, data
@@ -31,12 +44,20 @@ compiler.plugin('emit', (compilation, callback) => {
     callback()
 })
 
+/**
+ * views使用ejs模板进行页面中的内容替换。
+ * 第一个参数是模板的文件夹地址，第二个参数指明使用ejs模板替换html文件
+ */
 koa.use(views(path.resolve(__dirname, './dist'), {map: {html: 'ejs'}}))
+//自定义中间件
 koa.use(middleware)
+//开发工具
 koa.use(convert(devMiddleware(compiler, {
     noInfo: true,
     publicPath: config.output.publicPath
 })))
-koa.use(convert(hotMiddleware(compiler))) //热部署webpack
-koa.listen(port) //启动服务
+//热部署webpack
+koa.use(convert(hotMiddleware(compiler)))
+//启动服务
+koa.listen(port)
 console.log(`\n Open up http://localhost:${port}/ in your browser.\n`)

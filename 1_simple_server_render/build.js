@@ -3,7 +3,7 @@ import path from 'path'
 import views from 'koa-views'
 import koa from './koa'
 import middleware from './middleware'
-const dir = eval('__dirname'), //编译时不执行，运行时在共同环境执行。
+const dir = eval('__dirname'), //编译时不执行，运行时在打包之后的环境获取相对位置
     port = 8080,
     maxAge = 86000,
     gzip = true,
@@ -16,8 +16,10 @@ log('static path:', staticPath)
 log('static cache age:', maxAge, 'milliseconds')
 log(gzip ? 'gzip able' : 'gzip disable')
 
-koa.use(views(viewsPath, {map: {html: 'ejs'}}))//页面模板配置
-koa.use(serve(staticPath, { //静态资源配置
+//页面模板
+koa.use(views(viewsPath, {map: {html: 'ejs'}}))
+//静态资源管理， js、css等
+koa.use(serve(staticPath, {
     maxage: maxAge,
     gzip: gzip
 }))
