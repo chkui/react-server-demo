@@ -1,0 +1,32 @@
+.list{
+  display: inline-block;
+  width: 36rem;
+  color: #555555;
+}
+.item{
+  margin: 1rem 0;
+  text-align: left;
+  border-radius: 2px;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+}
+.label{
+  padding: 1rem .5rem;
+}
+.key{
+  display: inline-block;
+  margin: 0;
+  vertical-align: middle;
+  width: 4rem;
+  border-right: 1px solid #333333;
+}
+.value{
+  display: inline-block;
+  padding-left: 1rem;
+  margin: 0;
+  vertical-align: middle;
+  width: 29.8rem;
+}
+.img{
+  height: 5rem;
+  width: 5rem;
+}

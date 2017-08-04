@@ -8,7 +8,7 @@
     "simple-render-dev": "rimraf ./1_simple_server_render/dist/* && cross-env NODE_ENV=test nodemon ./1_simple_server_render/server.js --watch server --watch build",
     "simple-render-build": "rimraf ./1_simple_server_render/dist/* && cross-env NODE_ENV=production webpack --config ./1_simple_server_render/webpack/server-build",
     "simple-render-run": "cross-env NODE_ENV=production node ./1_simple_server_render/dist/server/main.js",
-    "chapter1": "webpack-dev-server --progress --colors --inline --config ./chapter1/webpack-config"
+    "render-static": "webpack-dev-server --progress --colors --inline --config ./2_route_redux_render/webpack/static"
   },
   "repository": {
     "type": "git",
