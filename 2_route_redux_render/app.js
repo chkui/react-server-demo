@@ -1,18 +1,20 @@
 'use strict';
 import React from 'react'
+import ModuleContain from './component/module/moduleContain'
 import {Link, Route} from 'react-router-dom'
-import {routes} from './config'
+import {links, routes} from './config'
 const cn = require('classnames/bind').bind(require('./app.scss'))
 
 const App = props =>
     <div className={cn('app')}>
-        <NavList />
+        {/*<NavList />*/}
         <Section />
+        <ModuleContain />
     </div>
 
 const NavList = props =>
     <nav>
-        {routes.map(i=><Nav key={i.id} to={i.url} name={i.name}/>)}
+        {links.map(i=><Nav key={i.id} to={i.url} name={i.name}/>)}
     </nav>
 
 /**
@@ -41,5 +43,4 @@ const Section = props =>
  */
 const Context = props =>
     <Route exact path={props.path} component={props.component}/>
-
 export default App

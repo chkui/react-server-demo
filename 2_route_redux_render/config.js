@@ -1,6 +1,18 @@
 import Home from './component/home'
-import Page1 from './component/page1'
-import Page2 from './component/page2'
+import Details from './component/details'
+
+import {homeList} from './component/details/reducer'
+import {moduleShow} from './component/module/reducer'
+
+export const links = [{
+    id:'home',
+    name:'搜索首页',
+    url:'/'
+},{
+    id:'details',
+    name:'搜索详情',
+    url:'/details'
+}]
 
 export const routes = [{
     id:'home',
@@ -8,13 +20,18 @@ export const routes = [{
     url:'/',
     component:Home
 },{
-    id:'page1',
-    name:'first',
-    url:'/page1',
-    component:Page1
+    id:'detailsStatic',
+    name:'detailsStatic',
+    url:'/details',
+    component:Details
 },{
-    id:'page2',
-    name:'second',
-    url:'/page2',
-    component:Page2
+    id:'detailsDynamic',
+    name:'detailsDynamic',
+    url:'/details/:text/:language/:order',
+    component:Details
 }]
+
+export const reducers = {
+    homeList,
+    moduleShow
+}

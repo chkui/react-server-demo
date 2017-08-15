@@ -1,43 +1,36 @@
 import React from 'react'
-import SearchInput from './searchInput'
-import Result from './result'
+import SearchInput from '../common/searchInput'
+const cn = require('classnames/bind').bind(require('./index.scss'))
 
-const C_URL = 'https://api.github.com/search/repositories?q={text}+language:{language}&sort={sort}&order=desc'
+const SelectList = [{
+    id: 'language',
+    options: [{id: 'javascript', name: 'JavaScript'}, {id: 'java', name: 'Java'}]
+}, {
+    id: 'order',
+    options: [{id: 'stars', name: 'Stars'}, {id: 'forks', name: 'Forks'}]
+}, {
+    id: 'render',
+    options: [{id: 'native', name: '前端'}, {id:'server', name:'服务器'}]
+}]
 
-class Home extends React.Component {
-    constructor(...props) {
+class Home extends React.Component{
+    constructor(...props){
         super(...props)
-        this.state = {
-            list: false
-        }
-        this.searchHandle = this.searchHandle.bind(this)
+        this.sumbitHandle = this.sumbitHandle.bind(this)
     }
 
-    searchHandle(text, language, order) {
-        const url = `https://api.github.com/search/repositories?q=${text}+language:${language}&sort=${order}&order=desc`,
-            _this = this
-        fetch(url).then((res) => {
-            return res.text()
-        }).then((body) => {
-            return JSON.parse(body)
-        }).then((json) => {
-            console.log(json)
-            _this.setState({list: json.items})
-        })
+    sumbitHandle(data){
+        this.props.history.push(`/details/${data.text}/${data.language}/${data.order}`)
     }
 
-    render() {
-        const {list} = this.state
-        return (<div>
-            <div>
-                <SearchInput onSubmit={this.searchHandle}/>
+    render(){
+        return(
+            <div className={cn('home')}>
+                <p>请输入github.com搜索内容，点击Enrty搜索</p>
+                <SearchInput selecteds={SelectList} onSubmit={this.sumbitHandle}/>
             </div>
-            {list && <Result list={list}/>}
-        </div>)
+        )
     }
 }
-
-const Item = props =>
-    <div>Item</div>
 
 export default Home
