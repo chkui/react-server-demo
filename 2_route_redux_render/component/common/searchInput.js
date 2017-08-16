@@ -42,13 +42,17 @@ class SearchInput extends React.Component {
         this.props.onSubmit(submitData)
     }
 
+    componentDidMount(){
+        const value = this.props.value
+        value && '' !== value.trim(' ') && (this.ref.input.value = value)
+    }
+
     render() {
         const {selecteds, text, value} = this.props
         return (<div className={cn('search-box')}>
             <input ref={(ref) => {
                 this.ref.input = ref
-            }} onKeyDown={this.keyUpHandle} className={cn('search')} type="text" placeholder={text ? text : ''}
-                   value={value}/>
+            }} onKeyDown={this.keyUpHandle} className={cn('search')} type="text" placeholder={text ? text : ''} />
             {selecteds && selecteds.map(i =>
                 <Select key={i.id} ref={(ref) => {
                     this.ref[i.id] = ref

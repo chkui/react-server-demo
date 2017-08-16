@@ -1,14 +1,15 @@
 import {moduleType, module} from '../module/reducer'
+import fetch from '../../util/fetch'
 
 const loading = () => {
     return {
-        type: 'homeListLoading'
+        type: 'detailListLoading'
     }
 }
 
 const loaded = list => {
     return {
-        type: 'homeListLoaded',
+        type: 'detailListLoaded',
         list: list
     }
 }
@@ -36,11 +37,11 @@ export const requestList = (text, language, order) => {
  * @param action
  * @returns {*}
  */
-export const homeList = (state = false, action) => {
+export const detailList = (state = false, action) => {
     switch (action.type) {
-        case 'homeListLoading':
+        case 'detailListLoading':
             return false
-        case 'homeListLoaded':
+        case 'detailListLoaded':
             return action.list
         default :
             return state

@@ -4,6 +4,26 @@ require('babel-register')({
     presets: ['es2015', 'react', 'stage-0'],
     plugins: ['add-module-exports']
 });
+
+// Css require hook
+require('css-modules-require-hook')({
+    extensions: ['.scss'],
+    preprocessCss: (data, filename) =>
+        require('node-sass').renderSync({
+            data,
+            file: filename
+        }).css,
+    camelCase: true,
+    generateScopedName: '[name]-[local]'
+})
+
+// Image require hook
+require('asset-require-hook')({
+    name: '/[hash].[ext]',
+    extensions: ['jpg', 'png', 'gif', 'svg'],
+    limit: 25000
+})
+
     //启动一个koa实例
 const koa = require('./koa'),
     // koa的垫片，将旧的generator模式替换为promise模式
@@ -23,7 +43,9 @@ const koa = require('./koa'),
     //webpack配置
     config = require('./webpack/server-dev'),
     //自己实现用于渲染app.js的中间件
-    middleware = require('./middleware'),
+    entry = require('./middleware/entry'),
+    //redux仓库
+    store = require('./middleware/store'),
     //端口
     port = 8080,
     //获取打包处理器的实例
@@ -49,8 +71,10 @@ compiler.plugin('emit', (compilation, callback) => {
  * 第一个参数是模板的文件夹地址，第二个参数指明使用ejs模板替换html文件
  */
 koa.use(views(path.resolve(__dirname, './dist'), {map: {html: 'ejs'}}))
+//创建redux-store
+koa.use(store)
 //自定义中间件
-koa.use(middleware)
+koa.use(entry)
 //开发工具
 koa.use(convert(devMiddleware(compiler, {
     noInfo: true,

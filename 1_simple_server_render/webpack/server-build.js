@@ -59,10 +59,6 @@ const clientConfig = {
             filename: path.resolve(__dirname, '../dist/views/index.html'),
             template: path.resolve(__dirname, '../index.html'),
         }),
-        new webpack.optimize.UglifyJsPlugin({ //压缩js
-            compress: {warnings: false},
-            comments: false
-        }),
         new ProgressBarWebpackPlugin()
     ]
 }
@@ -98,10 +94,6 @@ const serverConfig = {
         new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-        }),
-        new webpack.optimize.UglifyJsPlugin({ //压缩js
-            compress: {warnings: false},
-            comments: false
         }),
         new ProgressBarWebpackPlugin()
     ]

@@ -7,5 +7,5 @@ import {build} from './util/store'
 import {reducers} from './config'
 import App from './app'
 
-render(<Provider store={build(reducers)}>
+render(<Provider store={build(reducers, window.REDUX_STATE)}>
     <BrowserRouter><App/></BrowserRouter></Provider>, document.getElementById('root'))

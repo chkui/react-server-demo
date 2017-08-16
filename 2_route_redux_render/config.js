@@ -1,7 +1,7 @@
 import Home from './component/home'
 import Details from './component/details'
 
-import {homeList} from './component/details/reducer'
+import {detailList} from './component/details/reducer'
 import {moduleShow} from './component/module/reducer'
 
 export const links = [{
@@ -11,7 +11,7 @@ export const links = [{
 },{
     id:'details',
     name:'搜索详情',
-    url:'/details'
+    url:'/p/details'
 }]
 
 export const routes = [{
@@ -22,16 +22,16 @@ export const routes = [{
 },{
     id:'detailsStatic',
     name:'detailsStatic',
-    url:'/details',
+    url:'/p/details',
     component:Details
 },{
     id:'detailsDynamic',
     name:'detailsDynamic',
-    url:'/details/:text/:language/:order',
+    url:'/p/details/:text/:language/:order',
     component:Details
 }]
 
 export const reducers = {
-    homeList,
+    detailList,
     moduleShow
 }

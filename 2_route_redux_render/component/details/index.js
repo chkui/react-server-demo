@@ -17,7 +17,7 @@ const SelectList = [{
 
 const Details = connect((state, props) => {
     return {
-        list: state.homeList
+        list: state.detailList
     }
 }, (dispatch, props) => {
     return {
@@ -31,9 +31,9 @@ const Details = connect((state, props) => {
     }
 
     componentDidMount() {
-        const {load, match} = this.props,
+        const {load, match, list} = this.props,
             {text, language, order} = match.params
-        text && language && order && (load(match.params))
+        !list && text && language && order && (load(match.params))
     }
 
     render() {
