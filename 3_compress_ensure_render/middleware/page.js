@@ -49,6 +49,7 @@ async function page(ctx, next) {
             name: route.name,
             component: component
         }
+        console.log(ctx.page)
         return next()
     } else {
         return next()

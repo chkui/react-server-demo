@@ -14,7 +14,7 @@ const cn = require('classnames/bind').bind(require('./app.scss'))
 const App = props =>
     <div className={cn('app')}>
         {/*<NavList />*/}
-        <Section />
+        <Section {...props} />
         <ModuleContain />
     </div>
 
