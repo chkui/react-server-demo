@@ -9,7 +9,15 @@ module.exports = {
         bundle: ['./browserEntry.js',
             'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000'
         ],
-        vendor: ['react', 'react-dom']
+        vendor: ['react',
+            'react-dom',
+            'node-fetch',
+            'react-redux',
+            'react-router',
+            'react-router-dom',
+            'redux',
+            'redux-logger',
+            'redux-thunk']
     },
     output: {
         path: path.resolve(__dirname, '..', './dist'),

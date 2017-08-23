@@ -40,4 +40,6 @@ class Home extends React.Component {
     }
 }
 
-export default Home
+//webpack的require.ensure对es6支持存在问题
+module.exports = Home
+module.exports.default = module.exports

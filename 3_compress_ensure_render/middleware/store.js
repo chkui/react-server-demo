@@ -43,3 +43,4 @@ const processStore = (resolve, store, url) => {
 }
 
 module.exports = reduxStore
+module.exports.default = module.exports

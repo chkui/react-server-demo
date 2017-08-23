@@ -4,14 +4,18 @@
   "description": "react server render demo",
   "main": "index.js",
   "scripts": {
-    "simple-render-static": "webpack-dev-server --progress --colors --inline --config ./1_simple_server_render/webpack/static",
-    "simple-render-dev": "rimraf ./1_simple_server_render/dist/* && cross-env NODE_ENV=test nodemon ./1_simple_server_render/server.js --watch server --watch build",
-    "simple-render-build": "rimraf ./1_simple_server_render/dist/* && cross-env NODE_ENV=production webpack --config ./1_simple_server_render/webpack/server-build",
-    "simple-render-run": "cross-env NODE_ENV=production node ./1_simple_server_render/dist/server/main.js",
-    "render-static": "webpack-dev-server --progress --colors --inline --config ./2_route_redux_render/webpack/static",
-    "render-dev": "rimraf ./2_route_redux_render/dist/* && cross-env NODE_ENV=test nodemon ./2_route_redux_render/server.js --watch server --watch build",
-    "render-build": "rimraf ./2_route_redux_render/dist/* && cross-env NODE_ENV=production webpack --config ./2_route_redux_render/webpack/server-build",
-    "render-run": "cross-env NODE_ENV=production node ./2_route_redux_render/dist/server/main.js"
+    "1-static": "webpack-dev-server --progress --colors --inline --config ./1_simple_server_render/webpack/static",
+    "1-dev": "rimraf ./1_simple_server_render/dist/* && cross-env NODE_ENV=test nodemon ./1_simple_server_render/server.js --watch server --watch build",
+    "1-build": "rimraf ./1_simple_server_render/dist/* && cross-env NODE_ENV=production webpack --config ./1_simple_server_render/webpack/server-build",
+    "1-run": "cross-env NODE_ENV=production node ./1_simple_server_render/dist/server/main.js",
+    "2-static": "webpack-dev-server --progress --colors --inline --config ./2_route_redux_render/webpack/static",
+    "2-dev": "rimraf ./2_route_redux_render/dist/* && cross-env NODE_ENV=test nodemon ./2_route_redux_render/server.js --watch server --watch build",
+    "2-build": "rimraf ./2_route_redux_render/dist/* && cross-env NODE_ENV=production webpack --config ./2_route_redux_render/webpack/server-build",
+    "2-run": "cross-env NODE_ENV=production node ./2_route_redux_render/dist/server/main.js",
+    "3-static": "webpack-dev-server --progress --colors --inline --config ./3_compress_ensure_render/webpack/static",
+    "3-dev": "rimraf ./3_compress_ensure_render/dist/* && cross-env NODE_ENV=test nodemon ./3_compress_ensure_render/server.js --watch server --watch build",
+    "3-build": "cross-env NODE_ENV=production webpack --config ./3_compress_ensure_render/webpack/server-build",
+    "3-run": "cross-env NODE_ENV=production node ./3_compress_ensure_render/dist/server/server.js"
   },
   "repository": {
     "type": "git",
@@ -26,7 +30,16 @@
     "url": "https://github.com/chkui/react-server-demo/issues"
   },
   "homepage": "https://github.com/chkui/react-server-demo#readme",
-  "dependencies": {},
+  "dependencies": {
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-redux": "^5.0.6",
+    "react-router": "^4.1.2",
+    "react-router-dom": "^4.1.2",
+    "redux": "^3.6.0",
+    "redux-logger": "^2.10.2",
+    "redux-thunk": "^2.1.0"
+  },
   "devDependencies": {
     "asset-require-hook": "^1.1.0",
     "babel-core": "^6.24.1",
@@ -65,21 +78,15 @@
     "koa-views": "^5.0.0",
     "koa-webpack-dev-middleware": "^1.3.0",
     "koa-webpack-hot-middleware": "^1.0.3",
+    "optimize-css-assets-webpack-plugin": "^2.0.0",
     "node-sass": "^4.1.1",
     "nodemon": "^1.11.0",
     "postcss-loader": "^1.2.1",
     "precss": "^1.4.0",
     "progress-bar-webpack-plugin": "^1.9.0",
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1",
-    "react-redux": "^5.0.6",
-    "react-router": "^4.1.2",
-    "react-router-dom": "^4.1.2",
-    "redux": "^3.6.0",
-    "redux-logger": "^2.10.2",
-    "redux-thunk": "^2.1.0",
     "sass-loader": "^4.0.1",
     "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
     "webpack": "^2.6.1",
     "webpack-dev-server": "^2.4.5"
   }

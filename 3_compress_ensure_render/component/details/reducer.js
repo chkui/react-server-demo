@@ -1,6 +1,4 @@
 import {moduleType, module} from '../module/reducer'
-import fetch from '../../util/fetch'
-
 const loading = () => {
     return {
         type: 'detailListLoading'
@@ -14,7 +12,7 @@ const loaded = list => {
     }
 }
 
-export const requestList = (text, language, order) => {
+export const requestList = (text, language, order, fetch) => {
     return dispatch => {
         dispatch(loading())
         dispatch(module(moduleType.loading))

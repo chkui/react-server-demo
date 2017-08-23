@@ -3,6 +3,7 @@ import SearchInput from '../common/searchInput'
 import Result from './result'
 import {connect} from '../../util/store'
 import {requestList, cleanList} from './reducer'
+import getFetch from '../../util/fetch'
 
 const cn = require('classnames/bind').bind(require('./index.scss'))
 
@@ -22,7 +23,9 @@ const Details = connect((state, props) => {
 }, (dispatch, props) => {
     return {
         load: (data) => {
-            dispatch(requestList(data.text, data.language, data.order))
+            getFetch((fetch)=>{
+                dispatch(requestList(data.text, data.language, data.order, fetch))
+            })
         },
         clean: () => {
             dispatch(cleanList())
@@ -57,4 +60,6 @@ const Details = connect((state, props) => {
 const Item = props =>
     <div>Item</div>
 
-export default Details
+//webpack的require.ensure对es6支持存在问题
+module.exports = Details
+module.exports.default = module.exports

@@ -4,6 +4,7 @@ const path = require('path'),
     HtmlWebpackPlugin = require('html-webpack-plugin'),
     ProgressBarWebpackPlugin = require('progress-bar-webpack-plugin'),
     ExtractTextPlugin = require('extract-text-webpack-plugin'),
+    OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin'),
     externals = () => {
         return fs.readdirSync(path.resolve(__dirname, '../../node_modules'))
             .filter(filename => !filename.includes('.bin'))
@@ -17,18 +18,29 @@ const clientConfig = {
     devtool: false,
     context: path.resolve(__dirname, '..'),
     entry: {
-        bundle: ['./browserEntry.js'],
-        vendor: ['react', 'react-dom']
+        bundle: './browserEntry.js',
+        vendor: [
+            'react',
+            'react-dom',
+            //'node-fetch',
+            'react-redux',
+            'react-router',
+            'react-router-dom',
+            'redux',
+            'redux-logger',
+            'redux-thunk'
+        ]
     },
     output: {
         path: path.resolve(__dirname, '..', './dist/client'),
-        filename: '[name].js',
-        chunkFilename: 'chunk.[name].js',
+        filename: '[name][hash:8].js',
+        chunkFilename: '[name][chunkhash:8].js',
         publicPath: '/'
     },
     module: {
         rules: [{
             test: /\.js$/,
+            exclude: /node_modules/,
             use: [{
                 loader: 'babel-loader',
                 options: {
@@ -36,8 +48,7 @@ const clientConfig = {
                     plugins: ['transform-runtime', 'add-module-exports'],
                     cacheDirectory: true
                 }
-            }],
-            exclude: /node_modules/
+            }]
         }, {
             test: /\.scss$/,
             use: ExtractTextPlugin.extract({
@@ -67,8 +78,8 @@ const clientConfig = {
     plugins: [
         new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.optimize.CommonsChunkPlugin({
-            name: 'vendor',
-            filename: '[name][chunkhash:8].js', //开启webpack-dev-server后无法使用chunkHash，至webpack3.0依然未修复该问题
+            name: ['bundle', 'vendor'],
+            filename: '[name][chunkhash:8].js',
             children: true
         }),
         new webpack.optimize.CommonsChunkPlugin({
@@ -81,10 +92,6 @@ const clientConfig = {
             filename: path.resolve(__dirname, '../dist/views/index.html'),
             template: path.resolve(__dirname, '../index.html'),
         }),
-        new webpack.optimize.UglifyJsPlugin({ //压缩js
-            compress: {warnings: false},
-            comments: false
-        }),
         new ProgressBarWebpackPlugin(),
         new ExtractTextPlugin({
             filename: '[name][contenthash:8].css',
@@ -92,12 +99,34 @@ const clientConfig = {
         }),
         new webpack.NormalModuleReplacementPlugin( //解决node-fetch的警告
             /\/iconv-loader$/, 'node-noop'
-        )
+        ),
+        new webpack.optimize.UglifyJsPlugin({ //压缩js
+            compress: {warnings: false},
+            comments: false
+        }),
+        //压缩css
+        new OptimizeCssAssetsPlugin({
+            assetNameRegExp: /\.css$/g,
+            cssProcessor: require('cssnano'),
+            cssProcessorOptions: {discardComments: {removeAll: true}},
+            canPrint: true
+        }),
+        /*//分片优化，开启后会根据设定来合并分片代码
+        new webpack.optimize.AggressiveMergingPlugin(),
+        //设定分片限制
+        new webpack.optimize.LimitChunkCountPlugin({
+            maxChunks: 35,
+            minChunkSize: 1000
+        }),
+        //设定最小分片条件
+        new webpack.optimize.MinChunkSizePlugin({
+            minChunkSize: 10000
+        })*/
     ]
 }
 const serverConfig = {
     context: path.resolve(__dirname, '..'),
-    entry: './build.js',
+    entry: {server: './build.js'},
     output: {
         path: path.resolve(__dirname, '..', './dist/server'),
         filename: '[name].js', //由于是在本地使用，固定按照文件名称输出
@@ -152,10 +181,6 @@ const serverConfig = {
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
         }),
-        new webpack.optimize.UglifyJsPlugin({ //压缩js
-            compress: {warnings: false},
-            comments: false
-        }),
         new ProgressBarWebpackPlugin(),
         new ExtractTextPlugin({
             filename: '[name][contenthash:8].css',
@@ -163,7 +188,11 @@ const serverConfig = {
         }),
         new webpack.NormalModuleReplacementPlugin( //解决node-fetch的警告
             /\/iconv-loader$/, 'node-noop'
-        )
+        ),
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {warnings: false},
+            comments: false
+        })
     ]
 }
 
