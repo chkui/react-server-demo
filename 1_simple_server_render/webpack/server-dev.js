@@ -6,7 +6,7 @@ module.exports = {
     devtool: 'source-map',
     context: path.resolve(__dirname, '..'),
     entry: {
-        bundle: ['./index.js',
+        bundle: ['./browserEntry.js',
             'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000'
         ],
         vendor: ['react', 'react-dom']

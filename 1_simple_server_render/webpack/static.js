@@ -6,7 +6,7 @@ module.exports = {
     devtool: 'source-map',
     context: path.resolve(__dirname, '..'),
     entry: {
-        bundle: ['./index.js'],
+        bundle: ['./browserEntry.js'],
         vendor: ['react', 'react-dom']
     },
     output: {

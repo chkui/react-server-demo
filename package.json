@@ -14,7 +14,7 @@
     "2-run": "cross-env NODE_ENV=production node ./2_route_redux_render/dist/server/main.js",
     "3-static": "webpack-dev-server --progress --colors --inline --config ./3_compress_ensure_render/webpack/static",
     "3-dev": "rimraf ./3_compress_ensure_render/dist/* && cross-env NODE_ENV=test nodemon ./3_compress_ensure_render/server.js --watch server --watch build",
-    "3-build": "cross-env NODE_ENV=production webpack --config ./3_compress_ensure_render/webpack/server-build",
+    "3-build": "rimraf ./3_compress_ensure_render/dist/* && cross-env NODE_ENV=production webpack --config ./3_compress_ensure_render/webpack/server-build",
     "3-run": "cross-env NODE_ENV=production node ./3_compress_ensure_render/dist/server/server.js",
     "3-start": "pm2 start ./3_compress_ensure_render/pm2.config.js",
     "3-stop": "pm2 stop ./3_compress_ensure_render/pm2.config.js & pm2 delete ./3_compress_ensure_render/pm2.config.js & pm2 kill"
