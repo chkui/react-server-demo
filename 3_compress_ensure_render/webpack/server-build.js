@@ -22,7 +22,6 @@ const clientConfig = {
         vendor: [
             'react',
             'react-dom',
-            //'node-fetch',
             'react-redux',
             'react-router',
             'react-router-dom',
@@ -79,8 +78,7 @@ const clientConfig = {
         new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.optimize.CommonsChunkPlugin({
             name: ['bundle', 'vendor'],
-            filename: '[name][chunkhash:8].js',
-            children: true
+            filename: '[name][chunkhash:8].js'
         }),
         new webpack.optimize.CommonsChunkPlugin({
             name: 'manifest'
@@ -111,7 +109,7 @@ const clientConfig = {
             cssProcessorOptions: {discardComments: {removeAll: true}},
             canPrint: true
         }),
-        /*//分片优化，开启后会根据设定来合并分片代码
+        //分片优化，开启后会根据设定来合并分片代码
         new webpack.optimize.AggressiveMergingPlugin(),
         //设定分片限制
         new webpack.optimize.LimitChunkCountPlugin({
@@ -121,7 +119,7 @@ const clientConfig = {
         //设定最小分片条件
         new webpack.optimize.MinChunkSizePlugin({
             minChunkSize: 10000
-        })*/
+        })
     ]
 }
 const serverConfig = {

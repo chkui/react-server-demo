@@ -19,7 +19,6 @@ class P extends React.Component{
     constructor(...props){
         super(...props)
     }
-
     render(){
         return(
             <p>这是用ES6的class实现的组件，当在服务器上运行时对其进行修改页面会同步进行更新。</p>

@@ -59,4 +59,4 @@ export const reducers = {
  * 初始化加载页面的开关，仅用于说明区别
  * @type {boolean}
  */
-export const isInitComponent = true
+export const isInitComponent = false

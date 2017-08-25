@@ -3,6 +3,7 @@ import path from 'path'
 import views from 'koa-views'
 import koa from './koa'
 import store from './middleware/store'
+import page from './middleware/page'
 import entry from './middleware/entry'
 const dir = eval('__dirname'), //编译时不执行，运行时在打包之后的环境获取相对位置
     port = 8080,
@@ -25,6 +26,7 @@ koa.use(serve(staticPath, {
     gzip: gzip
 }))
 koa.use(store)
+koa.use(page)
 koa.use(entry)
 koa.listen(port || 8080)
 console.log(`\n Open up http://localhost:${port}/ in your browser.\n`)

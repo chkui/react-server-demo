@@ -16,10 +16,7 @@ const path = require('path'),
 const clientConfig = {
     devtool: false,
     context: path.resolve(__dirname, '..'),
-    entry: {
-        bundle: ['./browserEntry.js'],
-        vendor: ['react', 'react-dom']
-    },
+    entry: {bundle: ['./browserEntry.js']},
     output: {
         path: path.resolve(__dirname, '..', './dist/client'),
         filename: '[name].js',
@@ -66,26 +63,18 @@ const clientConfig = {
     },
     plugins: [
         new webpack.optimize.OccurrenceOrderPlugin(),
-        new webpack.optimize.CommonsChunkPlugin({
-            name: 'vendor',
-            filename: '[name][chunkhash:8].js', //开启webpack-dev-server后无法使用chunkHash，至webpack3.0依然未修复该问题
-            children: true
-        }),
-        new webpack.optimize.CommonsChunkPlugin({
-            name: 'manifest'
-        }),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+        }),
+        new ExtractTextPlugin({
+            filename: '[name][contenthash:8].css',
+            allChunks: true
         }),
         new HtmlWebpackPlugin({
             filename: path.resolve(__dirname, '../dist/views/index.html'),
             template: path.resolve(__dirname, '../index.html'),
         }),
         new ProgressBarWebpackPlugin(),
-        new ExtractTextPlugin({
-            filename: '[name][contenthash:8].css',
-            allChunks: true
-        }),
         new webpack.NormalModuleReplacementPlugin( //解决node-fetch的警告
             /\/iconv-loader$/, 'node-noop'
         )
@@ -116,7 +105,7 @@ const serverConfig = {
                 }
             }],
             exclude: /node_modules/
-        }, {
+        },{
             test: /\.scss$/,
             use: ExtractTextPlugin.extract({
                 fallback: 'style-loader',

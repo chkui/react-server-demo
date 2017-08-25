@@ -19,6 +19,11 @@ class Home extends React.Component {
     constructor(...props) {
         super(...props)
         this.sumbitHandle = this.sumbitHandle.bind(this)
+        this.clickHandle = this.clickHandle.bind(this)
+    }
+
+    clickHandle(e){
+        this.props.history.push('/p/ext/page')
     }
 
     sumbitHandle(data) {
@@ -32,7 +37,7 @@ class Home extends React.Component {
     render() {
         return (
             <div className={cn('home')}>
-                <img className={cn('img')} src={logoImg}/>
+                <img alt="点我" className={cn('img')} src={logoImg} onClick={this.clickHandle}/>
                 <br/>
                 <SearchInput selecteds={SelectList} text={tipText} onSubmit={this.sumbitHandle}/>
             </div>

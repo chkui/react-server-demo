@@ -7,6 +7,7 @@ if (typeof require.ensure !== 'function') {
 }
 export default (callback) =>{
     isServerEvn() ? require.ensure([], require => {
-        callback(require('node-fetch'))
+        const nodeFetch = require('node-fetch')
+        callback(nodeFetch)
     }, 'node-fetch'):callback(fetch)
 }
